@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h2 class="mb-4">{{ genre.title }}</h2>
+                <div class="card-deck">
+                    {% for movie in movies %}
+                        <div class="card mb-4">
+                            <img src="{{ movie.poster.url }}" class="card-img-top" alt="{{ movie.title }}" style="height: 300px; object-fit: cover;">
+                            <div class="card-body" style="height: 250px;">
+                                <h5 class="card-title" style="max-height: 60px; overflow: hidden;">
+                                    <a href="{% url 'filmapp:movie_detail' genre_slug=genre.slug movie_slug=movie.slug %}">{{ movie.title }}</a>
+                                </h5>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

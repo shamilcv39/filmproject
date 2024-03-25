@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container mt-4">
+    <h2>Search Results</h2>
+    <p>Showing results for "{{ query }}":</p>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <img src="{{ movie.poster.url }}" class="card-img-top" alt="{{ movie.title }}" width="300" height="250">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'filmapp:movie_detail' genre_slug=movie.genre.slug movie_slug=movie.slug %}">{{ movie.title }}</a></h5>
+                    <p>Genre: {{ movie.genre.title }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No results found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+

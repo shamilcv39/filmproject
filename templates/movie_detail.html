@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <div class="col-md-8">
+            {% if movie.poster %}
+                <img src="{{ movie.poster.url }}" width="700" height="500" alt="{{ movie.title }} poster">
+            {% else %}
+                <p>No poster available</p>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2>{{ movie.title }}</h2>
+            <p>{{ movie.description }}</p>
+            <p><strong>Release Date:</strong> {{ movie.release_date}}</p>
+            <p><strong>Cast:</strong> {{ movie.cast }}</p>
+            <p><strong>Genre:</strong> {{ movie.genre }}</p>
+            <p><strong>Trailer:</strong> <iframe width="100%" height="315" src="{{ movie.ytube_trailer|safe }}" frameborder="0" allowfullscreen></iframe></p>
+
+            <a class="btn btn-warning btn-netflix" href="{% url 'filmapp:update' movie.id %}">Update</a>
+            <a class="btn btn-warning btn-netflix" href="{% url 'filmapp:delete' movie.id %}">Delete</a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

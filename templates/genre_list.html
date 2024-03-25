@@ -1,0 +1,12 @@
+<ul>
+    {% for genre in genres %}
+        {% if genre.slug %}
+            <li><a href="{% url 'filmapp:movies_by_genre' genre.slug %}">{{ genre.title }}</a></li>
+        {% else %}
+            <!-- Handle the case where genre.slug is empty or not available -->
+        {% endif %}
+    {% endfor %}
+</ul>
+
+
+
