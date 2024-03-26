@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.utils.text import slugify
+from datetime import time
 
 # Create your views here.
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
@@ -37,10 +39,9 @@ def add_movie(request):
         cast = request.POST.get('cast')
         genre_id = request.POST.get('genre')
         user = request.user  # Get the current logged-in user
-
         genre = Genre.objects.get(id=genre_id)
 
-        new_movie = Movie.objects.create(
+        new_movie = Movie(
             title=title,
             poster=poster,
             description=description,
@@ -49,6 +50,15 @@ def add_movie(request):
             genre=genre,
             added_by=user,  # Associate the movie with the current user
         )
+        # Generating slug
+        slug = slugify(title)
+        # Check if the slug already exists
+        if Movie.objects.filter(slug=slug).exists():
+            slug = slug + '-' + str(int(time.time()))  # Appending timestamp to make it unique
+
+        new_movie.slug = slug
+
+        new_movie.save()
 
         ytube_trailer = request.POST.get('ytube_trailer')
         new_movie.ytube_trailer = ytube_trailer  # Set ytube_trailer separately
