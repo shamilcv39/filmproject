@@ -15,6 +15,11 @@ class Genre(models.Model):
         verbose_name = 'genre'
         verbose_name_plural = 'genres'
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('filmapp:movies_by_genre', args=[self.slug])
 
